@@ -1,0 +1,173 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Psycholinguistische Studie</title>
+    <script src="https://unpkg.com/jspsych@7.3.4"></script>
+    <script src="https://unpkg.com/@jspsych/plugin-html-keyboard-response@1.1.3"></script>
+    <link href="https://unpkg.com/jspsych@7.3.4/css/jspsych.css" rel="stylesheet" type="text/css" />
+    <style>
+      .experiment-header {
+        position: fixed; top: 0; left: 0; width: 100%;
+        background-color: #ffffff; border-bottom: 1px solid #eee;
+        padding: 20px 0; z-index: 1000;
+        display: flex; flex-direction: column; align-items: center;
+      }
+      .progress-container {
+        width: 500px; height: 12px; background-color: #eee;
+        border-radius: 6px; overflow: hidden; margin-top: 15px;
+      }
+      .progress-bar { width: 0%; height: 100%; background-color: #4caf50; }
+      @keyframes fillProgress { from { width: 0%; } to { width: 100%; } }
+      .jspsych-content-wrapper { padding-top: 160px; }
+      .reading-box {
+        max-width: 800px; text-align: left; font-family: 'Times New Roman', serif;
+        font-size: 22px; line-height: 1.5; background: #fff;
+        padding: 30px; border: 1px solid #ccc; box-shadow: 2px 2px 10px rgba(0,0,0,0.05);
+        margin: 0 auto;
+      }
+      .text-container { max-width: 700px; text-align: left; font-family: Arial; line-height: 1.6; }
+      .consent-box { background: #f9f9f9; padding: 25px; border: 1px solid #ddd; border-radius: 8px; }
+      .consent-item { margin-bottom: 15px; display: flex; align-items: flex-start; }
+      .consent-item input { margin-right: 15px; margin-top: 5px; transform: scale(1.2); }
+      .stimulus-word { font-size: 42px; font-weight: bold; font-family: Arial; margin-bottom: 10px; }
+      .stop-signal { color: #d9534f; font-size: 80px; font-weight: bold; }
+      .sub-instruction { font-size: 18px; color: #666; font-style: italic; font-family: Arial; }
+      .nav-hint { margin-top: 40px; font-size: 13px; color: #888; border-top: 1px solid #eee; padding-top: 10px; }
+      button:disabled { opacity: 0.5; cursor: not-allowed; }
+    </style>
+  </head>
+  <body></body>
+  <script>
+    const jsPsych = initJsPsych();
+
+    let ddk_iteration = 1;
+
+    const trials_data = [
+      { 
+        type: 'consent', 
+        category: `
+          <div class="text-container">
+            <h2>Einverständniserklärung</h2>
+            <div class="consent-box">
+              <div class="consent-item">
+                <input type="checkbox" id="consent_transcript" onchange="checkConsent()">
+                <label for="consent_transcript"><strong>(Pflicht)</strong> Ich stimme der Veröffentlichung anonymisierter Transkripte zu.</label>
+              </div>
+              <div class="consent-item">
+                <input type="checkbox" id="consent_audio">
+                <label for="consent_audio"><strong>(Optional)</strong> Ich stimme der Veröffentlichung anonymisierter Audioaufnahmen zu.</label>
+              </div>
+            </div>
+            <button id="start_btn" disabled onclick="advance()" style="margin-top:20px; padding: 10px 20px;">Akzeptieren und Weiter</button>
+          </div>`, 
+        duration: 0 
+      },
+      { type: 'Anweisung', category: 'Phase 1: Artikulation & Lesen', subtext: 'Drücken Sie [ . ] für den ersten Lesetext.', duration: 0 },
+      
+      // DDK BLOCK 1
+      { type: 'DDK-Aktiv', category: 'pa - ta - ka', duration: 10000, iteration: 1 },
+      { type: 'DDK-Stop', category: '<div class="stop-signal">STOPP</div>', subtext: 'Atmen Sie durch. Weiter mit [ . ] zu Durchgang 2.', duration: 0 },
+      
+      // DDK BLOCK 2
+      { type: 'DDK-Aktiv', category: 'pa - ta - ka', duration: 10000, iteration: 2 },
+      { type: 'DDK-Stop', category: '<div class="stop-signal">STOPP</div>', subtext: 'Atmen Sie durch. Weiter mit [ . ] zu Durchgang 3.', duration: 0 },
+      
+      // DDK BLOCK 3
+      { type: 'DDK-Aktiv', category: 'pa - ta - ka', duration: 10000, iteration: 3 },
+      { type: 'DDK-Stop', category: '<div class="stop-signal">STOPP</div>', subtext: 'Sehr gut. Weiter mit [ . ] zur Wortflüssigkeit.', duration: 0 },
+
+      { 
+        type: 'Lesetext', 
+        category: `
+          <div class="reading-box">
+            <strong>Der Tag am Bodensee</strong><br><br>
+            Rita packt ihr Paket. Es ist spät, doch die Sonne scheint auf das Beet. Sie trägt einen Hut und geht zum Boot, das am Kai liegt. Ihr Hund Bodo bellt laut, als er ein Gebäck im Gras entdeckt. Sie sieht ein Boot im tiefen Wasser. Der Wind weht über das Kap. Sie isst einen Apfel und ein Stück Brot, während sie auf den Tag blickt. Plötzlich macht es patsch! Ein Ball ist in den Dreck gefallen. Bodo hat Glück und findet eine Puppe im Gebüsch. Rita lacht und ruft: „Guck mal!“ Alles ist gut. Der Staub auf dem Weg legt sich, und die Nacht kommt mit kühler Luft. Sie geht zurück in ihr Depot und träumt von einem Ritt auf dem Bock.
+          </div>`, 
+        subtext: 'Bitte lesen Sie den Text ruhig und deutlich vor.', 
+        duration: 0 
+      },
+
+      { 
+        type: 'Lesetext',
+        category: `
+          <div class="reading-box">
+            <strong>Nordwind und Sonne</strong><br><br>
+            Einst stritten sich Nordwind und Sonne, wer von ihnen beiden wohl der Stärkere wäre, als ein Wanderer, der in einen warmen Mantel gehüllt war, des Weges daherkam. Sie wurden einig, dass derjenige für den Stärkeren gelten sollte, der den Wanderer zwingen würde, seinen Mantel abzunehmen. Der Nordwind blies mit aller Macht, aber je mehr er blies, desto fester hüllte sich der Wanderer in seinen Mantel ein. Endlich gab der Nordwind den Kampf auf. Nun erwärmte die Sonne die Luft mit ihren freundlichen Strahlen, und schon nach wenigen Augenblicken zog der Wanderer seinen Mantel aus. Da musste der Nordwind zugeben, dass die Sonne von ihnen beiden der Stärkere war.
+          </div>`, 
+        subtext: 'Bitte lesen Sie den Text laut und deutlich vor.', 
+        duration: 0
+      },
+
+      { type: 'Anweisung', category: 'Phase 2: Wortflüssigkeit', subtext: '1 Minute pro Aufgabe. Drücken Sie [ . ] zum Starten.', duration: 0 },
+      { type: 'Phonetisch', category: 'Buchstabe: S', duration: 60000 },
+      { type: 'Wortflüssigkeit-Stop', category: '<div class="stop-signal">STOPP</div>', subtext: 'Atmen Sie durch. Weiter mit [ . ] zum nächsten Durchgang.', duration: 0 },
+      { type: 'Semantisch', category: 'TIERE', duration: 60000 },
+      { type: 'Phonetisch', category: 'Buchstabe: K', duration: 60000 },
+      { type: 'Semantisch', category: 'Lebensmittel', duration: 60000 },
+//      { type: 'Phonetisch', category: 'Buchstabe: P', duration: 60000 },
+      { type: 'Anweisung', category: 'Phase 3: Freies Sprechen', subtext: '5 Minuten pro Frage. Drücken Sie [ . ] zum Starten.', duration: 0 },
+      { type: 'Diskussion', category: 'Kindheitserinnerung', duration: 300000 },
+      { type: 'Nacherzählung', category: 'Nordwind und Sonne', subtext: 'Bitte geben Sie die Geschichte, die Sie am Anfang gelesen haben, so detailliert wie möglich mit Ihren eigenen Worten wieder.', duration: 0 },
+      { type: 'Ende', category: '<h2>Vielen Dank!</h2>', duration: 0 }
+    ];
+
+    let current_index = 0;
+
+    window.checkConsent = function() {
+      const required = document.getElementById('consent_transcript').checked;
+      document.getElementById('start_btn').disabled = !required;
+    };
+
+    window.advance = function() {
+      jsPsych.data.addProperties({
+        consent_transcript: document.getElementById('consent_transcript').checked,
+        consent_audio: document.getElementById('consent_audio').checked
+      });
+      current_index++;
+      jsPsych.finishTrial();
+    };
+
+    const master_loop = {
+      timeline: [{
+        type: jsPsychHtmlKeyboardResponse,
+        stimulus: function() {
+          const item = trials_data[current_index];
+          const hasTime = item.duration > 0;
+          const seconds = item.duration / 1000;
+          
+          let header = item.type.toUpperCase();
+          if(item.iteration) header += ` (DURCHGANG ${item.iteration} VON 3)`;
+
+          return `
+            <div class="experiment-header">
+              <div style="text-transform: uppercase; color: #666; letter-spacing: 1px;">${header}</div>
+              ${hasTime ? `<div class="progress-container"><div class="progress-bar" style="animation: fillProgress ${seconds}s linear forwards;"></div></div>` : ''}
+            </div>
+            <div class="stimulus-word">${item.category}</div>
+            ${item.subtext ? `<div class="sub-instruction">${item.subtext}</div>` : ''}
+            ${item.type !== 'consent' && item.type !== 'DDK-Aktiv' && current_index < trials_data.length - 1 ? 
+              `<div class="nav-hint">Weiter mit [ . ] ${current_index > 0 ? '| Zurück mit [ , ]' : ''}</div>` : ''}
+          `;
+        },
+        choices: function() {
+          if (trials_data[current_index].type === 'consent') return "NO_KEYS";
+          if (trials_data[current_index].type === 'DDK-Aktiv') return "NO_KEYS";
+          return [',', '.'];
+        },
+        trial_duration: function() {
+          return trials_data[current_index].duration > 0 ? trials_data[current_index].duration : null;
+        },
+        on_finish: function(data) {
+          if (data.response === '.') current_index++;
+          else if (data.response === ',') current_index = Math.max(0, current_index - 1);
+          else if (data.response === null) current_index++; // Automatisch weiter nach Zeitablauf (DDK/Fluency)
+        }
+      }],
+      loop_function: function() {
+        return current_index < trials_data.length;
+      }
+    };
+
+    jsPsych.run([master_loop]);
+  </script>
+</html>
