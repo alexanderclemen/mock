@@ -33,12 +33,12 @@
       .consent-item input { margin-right: 15px; margin-top: 5px; transform: scale(1.2); }
       .stimulus-word { font-size: 42px; font-weight: bold; font-family: Arial; margin-bottom: 10px; }
       .stop-signal { color: #d9534f; font-size: 80px; font-weight: bold; }
-      -pause-signal { color: #4caf50; font-size: 80px; font-weight: bold;}
+      .pause-signal { font-size: 80px; font-weight: bold; }
       .sub-instruction { font-size: 18px; color: #666; font-style: italic; font-family: Arial; }
       .nav-hint { margin-top: 40px; font-size: 13px; color: #888; border-top: 1px solid #eee; padding-top: 10px; }
-
       button { padding: 10px 20px; cursor: pointer; background: #4caf50; color: white; border: none; border-radius: 5px; font-size: 16px; }
       button:disabled { opacity: 0.5; cursor: not-allowed; }
+      #error-msg { color: #d9534f; font-weight: bold; margin-bottom: 10px; display: none; }
     </style>
   </head>
   <body></body>
@@ -50,21 +50,19 @@
     let ddk_iteration = 1;
 
     const trials_data = [
-      {
-        type: 'login',
+      { type: 'login',
         category: `
           <div class="password-container">
             <h2>Login</h2>
             <p>Bitte geben Sie das Passwort ein, um die Studie zu starten:</p>
-            <!-- <div id="error-msg">Falsches Passwort. Bitte versuchen Sie es erneut.</div> -->
+            <div id="error-msg">Falsches Passwort. Bitte versuchen Sie es erneut.</div>
             <input type="password" id="pw_field" class="password-input" placeholder="Passwort eingeben..."><br>
             <button onclick="checkPassword()">Anmelden</button>
           </div>`,
         duration: 0
       },
 
-      { 
-        type: 'consent', 
+      { type: 'consent', 
         category: `
           <div class="text-container">
             <h2>Einverständniserklärung</h2>
@@ -90,13 +88,17 @@
         duration: 0 
       },
 
-      {
-        type: 'Fragebogen',
+      { type: 'Mikrofontest', 
+        category: '', // Wird dynamisch befüllt
+        subtext: 'Sprechen Sie kurz zur Probe und drücken Sie dann [ . ]', 
+        duration: 0 
+      },
+
+      { type: 'Fragebogen',
         category: `
           <div class="text-container" style="text-align: center;">
             <h2>Zusätzliche Fragen</h2>
             <p>Bevor wir mit den Sprechaufgaben beginnen, bitten wir Sie, einen kurzen Fragebogen auszufüllen.</p>
-            <p>Klicken Sie auf den folgenden Button, um den Fragebogen in einem neuen Fenster zu öffnen:</p>
             
             <a href="https://DEIN-SERVER.de/limesurvey/index.php/123456" 
                target="_blank" 
@@ -125,11 +127,9 @@
       // DDK BLOCK 1
       { type: 'DDK-Aktiv', category: 'pa - ta - ka', duration: 10000, iteration: 1 },
       { type: 'Stop', category: '<div class="stop-signal">STOP</div>', subtext: 'Atmen Sie durch. Weiter mit [ . ] zu Durchgang 2.', duration: 0 },
-      
       // DDK BLOCK 2
       { type: 'DDK-Aktiv', category: 'pa - ta - ka', duration: 10000, iteration: 2 },
       { type: 'Stop', category: '<div class="stop-signal">STOP</div>', subtext: 'Atmen Sie durch. Weiter mit [ . ] zum letzten Durchgang.', duration: 0 },
-      
       // DDK BLOCK 3
       { type: 'DDK-Aktiv', category: 'pa - ta - ka', duration: 10000, iteration: 3 },
       { type: 'Stop', category: '<div class="stop-signal">STOP</div>', subtext: 'Sehr gut. Weiter mit [ . ].', duration: 0 },
@@ -144,8 +144,7 @@
         subtext: '1 Minute pro Aufgabe. Drücken Sie [ . ] zum Starten.', 
         duration: 0 
       },
-      { 
-        type: 'Lesetext', 
+      { type: 'Lesetext', 
         category: `
           <div class="reading-box">
             <strong>Der Tag am Bodensee</strong><br><br>
@@ -154,11 +153,9 @@
         subtext: 'Bitte lesen Sie den Text ruhig und deutlich vor.', 
         duration: 0 
       },
-
       { type: 'Pause', category: '<div class="pause-signal">Brauchen Sie eine Pause?</div>', subtext: 'Sehr gut. Weiter mit [ . ] zum zweiten Text.', duration: 0 },
 
-      { 
-        type: 'Lesetext',
+      { type: 'Lesetext',
         category: `
           <div class="reading-box">
             <strong>Nordwind und Sonne</strong><br><br>
@@ -167,8 +164,6 @@
         subtext: 'Bitte lesen Sie den Text laut und deutlich vor.', 
         duration: 0
       },
-
-
       { type: 'Pause', category: '<div class="pause-signal">Brauchen Sie eine Pause?</div>', subtext: 'Sehr gut. Weiter mit [ . ] zur Wortflüssigkeit.', duration: 0 },
 
       { type: 'Anweisung', category: 'Phase 2: Wortflüssigkeit', subtext: '1 Minute pro Aufgabe. Drücken Sie [ . ] zum Starten.', duration: 0 },
@@ -181,14 +176,14 @@
         subtext: '1 Minute pro Aufgabe. Drücken Sie [ . ] zum Starten.', 
         duration: 0 
       },
-      { type: 'Phonetisch', category: 'Worte, die mit "S" anfangen', duration: 60000 },
-      { type: 'Wortflüssigkeit-Stop', category: '<div class="stop-signal">STOP</div>', subtext: 'Atmen Sie durch. Weiter mit [ . ] zum nächsten Durchgang.', duration: 0 },
+      { type: 'Phonetisch', category: 'Nennen Sie Worte, die mit "S" anfangen', duration: 60000 },
+      { type: 'Stop', category: '<div class="stop-signal">STOP</div>', subtext: 'Atmen Sie durch. Weiter mit [ . ] zum nächsten Durchgang.', duration: 0 },
       { type: 'Semantisch', category: 'Tiere', duration: 60000 },
-      { type: 'Wortflüssigkeit-Stop', category: '<div class="stop-signal">STOP</div>', subtext: 'Atmen Sie durch. Weiter mit [ . ] zum nächsten Durchgang.', duration: 0 },
-      { type: 'Phonetisch', category: 'Worte, die mit "K" anfangen', duration: 60000 },
-      { type: 'Wortflüssigkeit-Stop', category: '<div class="stop-signal">STOP</div>', subtext: 'Atmen Sie durch. Weiter mit [ . ] zum letzten Durchgang.', duration: 0 },
-      { type: 'Semantisch', category: 'Lebensmittel', duration: 60000 },
-      { type: 'Wortflüssigkeit-Stop', category: '<div class="stop-signal">STOP</div>', subtext: 'Atmen Sie durch. Weiter mit [ . ] zum letzten Durchgang.', duration: 0 },
+      { type: 'Stop', category: '<div class="stop-signal">STOP</div>', subtext: 'Atmen Sie durch. Weiter mit [ . ] zum nächsten Durchgang.', duration: 0 },
+      { type: 'Phonetisch', category: 'Nennen Sie Worte, die mit "K" anfangen', duration: 60000 },
+      { type: 'Stop', category: '<div class="stop-signal">STOP</div>', subtext: 'Atmen Sie durch. Weiter mit [ . ] zum letzten Durchgang.', duration: 0 },
+      { type: 'Semantisch', category: 'Nennen Sie Lebensmittel', duration: 60000 },
+      { type: 'Stop', category: '<div class="stop-signal">STOP</div>', subtext: 'Atmen Sie durch. Weiter mit [ . ] zum letzten Durchgang.', duration: 0 },
 //      { type: 'Phonetisch', category: 'Buchstabe: P', duration: 60000 },
       { type: 'Pause', category: '<div class="pause-signal">Brauchen Sie eine Pause?</div>', subtext: 'Sehr gut. Weiter mit [ . ] zum freien Sprechen.', duration: 0 },
 
@@ -244,7 +239,34 @@
       timeline: [{
         type: jsPsychHtmlKeyboardResponse,
         stimulus: function() {
+          //
           const item = trials_data[current_index];
+            let displayCategory = item.category;
+
+            // Spezielle Logik für den Mikrofontest
+            if (item.type === 'Mikrofontest') {
+              // Wir holen den Wert direkt aus den jsPsych-Daten
+              const audio_consent = jsPsych.data.get().select('consent_audio').values[0];
+
+              if (audio_consent === true) {
+                displayCategory = `
+                  <div class="text-container" style="border: 2px solid #4caf50; padding: 20px; border-radius: 10px;">
+                    <h2 style="color: #4caf50;">🎤 Mikrofon bereit (Einwilligung erteilt)</h2>
+                    <p>Sie haben zugestimmt, dass Ihre <strong>Audioaufnahmen anonymisiert veröffentlicht</strong> werden dürfen.</p>
+                    <p>Bitte stellen Sie sicher, dass Ihr Mikrofon aktiv ist, damit die spätere Transkription präzise erfolgen kann.</p>
+                  </div>`;
+              } else {
+                displayCategory = `
+                  <div class="text-container" style="border: 2px solid #666; padding: 20px; border-radius: 10px;">
+                    <h2 style="color: #666;">🎤 Mikrofon bereit (Nur interne Nutzung)</h2>
+                    <p>Sie haben der Veröffentlichung der Audioaufnahmen <strong>nicht zugestimmt</strong>.</p>
+                    <p>Ihre Stimme wird ausschließlich für die interne Auswertung genutzt und nicht an Dritte weitergegeben.</p>
+                  </div>`;
+              }
+            }
+          //
+          
+//          const item = trials_data[current_index];
           const hasTime = item.duration > 0;
           const seconds = item.duration / 1000;
           
@@ -256,7 +278,7 @@
               <div style="text-transform: uppercase; color: #666; letter-spacing: 1px;">${header}</div>
               ${hasTime ? `<div class="progress-container"><div class="progress-bar" style="animation: fillProgress ${seconds}s linear forwards;"></div></div>` : ''}
             </div>
-            <div class="stimulus-word">${item.category}</div>
+            <div class="stimulus-word">${displayCategory}</div>
             ${item.subtext ? `<div class="sub-instruction">${item.subtext}</div>` : ''}
             ${item.type !== 'login' && item.type !== 'consent' && item.type !== 'DDK-Aktiv' && current_index < trials_data.length - 1 ? 
               `<div class="nav-hint">Weiter mit [ . ] ${current_index > 0 ? '| Zurück mit [ , ]' : ''}</div>` : ''}
