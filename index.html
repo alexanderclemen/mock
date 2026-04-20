@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
   <head>
-    <title>Psycholinguistische Studie</title>
+    <title>Investigating Speechmarkers in People with Epilepsy</title>
     <script src="https://unpkg.com/jspsych@7.3.4"></script>
     <script src="https://unpkg.com/@jspsych/plugin-html-keyboard-response@1.1.3"></script>
     <link href="https://unpkg.com/jspsych@7.3.4/css/jspsych.css" rel="stylesheet" type="text/css" />
@@ -18,7 +18,7 @@
       }
       .progress-bar { width: 0%; height: 100%; background-color: #4caf50; }
       @keyframes fillProgress { from { width: 0%; } to { width: 100%; } }
-      .jspsych-content-wrapper { padding-top: 160px; }
+      .jspsych-content-wrapper { padding-top: 100px; }
       .reading-box {
         max-width: 800px; text-align: left; font-family: 'Times New Roman', serif;
         font-size: 22px; line-height: 1.5; background: #fff;
@@ -28,20 +28,22 @@
       .text-container { max-width: 1200px; text-align: left; font-family: Arial; line-height: 1.6; }
       .password-container { padding: 40px; background: #f4f4f4; border-radius: 10px; border: 1px solid #ccc; }
       .password-input { padding: 10px; font-size: 18px; width: 250px; border-radius: 5px; border: 1px solid #999; margin-bottom: 10px; }
-      .consent-box { background: #f9f9f9; padding: 25px; border: 1px solid #ddd; border-radius: 8px; }
-      .consent-item { margin-bottom: 15px; display: flex; align-items: flex-start; }
+      .consent-box { background: #f9f9f9; padding: 15px; border: 1px solid #ddd; border-radius: 8px; }
+      .consent-item { margin-bottom: 10px; display: flex; align-items: flex-start; }
       .consent-item input { margin-right: 15px; margin-top: 5px; transform: scale(1.2); }
-      .stimulus-word { font-size: 42px; font-weight: bold; font-family: Arial; margin-bottom: 10px; }
+      .stimulus-word { font-size: 42px; font-weight: normal; font-family: Arial; margin-bottom: 10px; }
       .stop-signal { color: #d9534f; font-size: 80px; font-weight: bold; }
-      .pause-signal { font-size: 80px; font-weight: bold; }
+      .pause-signal { font-size: 80px; font-weight: normal; }
       .sub-instruction { font-size: 18px; color: #666; font-style: italic; font-family: Arial; }
       .nav-hint { margin-top: 40px; font-size: 13px; color: #888; border-top: 1px solid #eee; padding-top: 10px; }
+      .big-stimulus { font-size: 80px; font-weight: bold; }
       button { padding: 10px 20px; cursor: pointer; background: #4caf50; color: white; border: none; border-radius: 5px; font-size: 16px; }
       button:disabled { opacity: 0.5; cursor: not-allowed; }
-      #error-msg { color: #d9534f; font-weight: bold; margin-bottom: 10px; display: none; }
+      #error-msg { color: #d9534f; font-weight: normal; margin-bottom: 10px; display: none; }
     </style>
   </head>
   <body></body>
+
   <script>
     const jsPsych = initJsPsych();
 
@@ -90,24 +92,24 @@
 
       { type: 'Mikrofontest', 
         category: '', // Wird dynamisch befüllt
-        subtext: 'Sprechen Sie kurz zur Probe und drücken Sie dann [ . ]', 
-        duration: 0 
+        <!-- subtext: 'Sprechen Sie kurz zur Probe und drücken Sie dann [ . ]', -->
+        duration: 50000 
       },
 
       { type: 'Fragebogen',
         category: `
           <div class="text-container" style="text-align: center;">
-            <h2>Zusätzliche Fragen</h2>
-            <p>Bevor wir mit den Sprechaufgaben beginnen, bitten wir Sie, einen kurzen Fragebogen auszufüllen.</p>
+            <h2>Fragebogen</h2>
+            <p>Bevor wir mit den Sprechaufgaben beginnen müssen Sie noch einen kurzen Fragebogen auszufüllen.</p>
             
-            <a href="https://DEIN-SERVER.de/limesurvey/index.php/123456" 
+            <a href="https://HIERKOMMTNOCHEINLINKREIN.de/limesurvey/index.php/" 
                target="_blank" 
-               style="display: inline-block; padding: 15px 25px; background-color: #0056b3; color: white; text-decoration: none; border-radius: 5px; margin: 20px 0; font-weight: bold;">
+               style="display: inline-block; padding: 15px 25px; background-color: #0056b3; color: white; text-decoration: none; border-radius: 5px; margin: 20px 0; font-weight: normal;">
                Fragebogen öffnen
             </a>
 
             <p style="font-size: 16px; color: #555; margin-top: 20px;">
-              Kehren Sie nach dem Ausfüllen hierher zurück und drücken Sie <strong>[ . ]</strong>, um mit der Studie fortzufahren.
+              Kehren Sie nach dem Ausfüllen zurück. und drücken Sie <strong>[ . ]</strong>, um mit der Studie fortzufahren.
             </p>
           </div>`,
         duration: 0
@@ -118,13 +120,12 @@
         category: `
           <div class="reading-box">
             <strong>Erklärung 1: Artikulation</strong><br><br>
+
             Bitte wiederholen Sie "pa-ta-ka" so schnell und deutlich wie möglich bis auf dem Bildschirm ein großes STOP zu sehen ist.<br><br>
 
               Ablauf: Wir führen insgesamt drei Durchläufe durch.<br>
-
               Dauer: Jeder Durchlauf dauert 10 Sekunden.<br>
-
-              Pause: Zwischen jedem Durchläufen haben Sie Zeit zum durchzuatmen.<br>
+              Pause: Zwischen jedem Durchläufen haben Sie Zeit zum durchzuatmen.<br><br>
 
               Holen sie vor jedem Durchlauf einmal tief Luft.
             </div>`,
@@ -133,13 +134,13 @@
       },
       
       // DDK BLOCK 1
-      { type: 'DDK-Aktiv', category: 'pa - ta - ka', duration: 10000, iteration: 1 },
+      { type: 'DDK-Aktiv', category: '<span style="font-size: 80px;">pa - ta - ka</span>', duration: 10000, iteration: 1 },
       { type: 'Stop', category: '<div class="stop-signal">STOP</div>', subtext: 'Atmen Sie durch. Weiter mit [ . ] zu Durchgang 2.', duration: 0 },
       // DDK BLOCK 2
-      { type: 'DDK-Aktiv', category: 'pa - ta - ka', duration: 10000, iteration: 2 },
+      { type: 'DDK-Aktiv', category: '<span style="font-size: 80px;">pa - ta - ka</span>', duration: 10000, iteration: 2 },
       { type: 'Stop', category: '<div class="stop-signal">STOP</div>', subtext: 'Atmen Sie durch. Weiter mit [ . ] zum letzten Durchgang.', duration: 0 },
       // DDK BLOCK 3
-      { type: 'DDK-Aktiv', category: 'pa - ta - ka', duration: 10000, iteration: 3 },
+      { type: 'DDK-Aktiv', category: '<span style="font-size: 80px;">pa - ta - ka</span>', duration: 10000, iteration: 3 },
       { type: 'Stop', category: '<div class="stop-signal">STOP</div>', subtext: 'Sehr gut. Weiter mit [ . ].', duration: 0 },
       { type: 'Pause', category: '<div class="pause-signal">Brauchen Sie eine Pause?</div>', subtext: 'Weiter mit [ . ] zum nächsten Teil.', duration: 0 },
 
@@ -147,12 +148,11 @@
         category: `
           <div class="reading-box">
             <strong>Erklärung 1: Lesen</strong><br><br>
+
             Nun folgen zwei kurze Texte. Bitte lesen Sie diese nacheinander in einem angenehmen Tempo laut vor. <br><br>
 
             Es geht nicht um Schnelligkeit, sondern um einen natürlichen Lesefluss.<br>
-
             Falls sie einen Fehler machen wiederholen Sie bitte den ganzen Satz noch einmal.<br>
-
             Wenn sie mit dem ersten Text fertig sind drücken Sie auf [ . ], dann gibt es eine Pause.
           </div>`,
         subtext: 'Drücken Sie [ . ] zum Starten.', 
@@ -187,28 +187,27 @@
             Teil 1 von 3 ist geschafft!<br><br>
 
             Nun wird Ihnen entweder ein Buchstabe (z. B. "P") oder eine Kategorie (z.B. "Farben") angezeigt. Bitte nennen Sie so viele passende Wörter wie möglich, die mit diesem Buchstaben beginnen oder zur Kategorie passen.<br><br>
+            
             Hinweis: Versuchen Sie, Wortwiederholungen zu vermeiden.<br><br>
 
             Dauer: Sie haben pro Durchgang 60 Sekunden Zeit. Dann kommt das STOP Signal.<br>
-
             Umfang: Insgesamt führen wir vier Durchläufe durch.<br>
-
             Pausen: Zwischen den Runden können Sie kurz verschnaufen.<br>
 
           </div>`,
         subtext: '1 Minute pro Aufgabe. Drücken Sie [ . ] zum Starten.', 
         duration: 0 
       },
-      { type: 'Phonetisch', category: 'S', duration: 60000 },
+      { type: 'Phonetisch', category: '<span style="font-size: 80px;">S</span>', duration: 60000 },
       { type: 'Stop', category: '<div class="stop-signal">STOP</div>', subtext: 'Atmen Sie durch. Weiter mit [ . ] zum nächsten Durchgang.', duration: 0 },
       { type: 'Pause', category: '<div class="pause-signal">Brauchen Sie eine Pause?</div>', subtext: 'Weiter mit [ . ].', duration: 0 },
-      { type: 'Semantisch', category: 'Tiere', duration: 60000 },
+      { type: 'Semantisch', category: '<span style="font-size: 80px;">Tiere</span>', duration: 60000 },
       { type: 'Stop', category: '<div class="stop-signal">STOP</div>', subtext: 'Atmen Sie durch. Weiter mit [ . ] zum nächsten Durchgang.', duration: 0 },
       { type: 'Pause', category: '<div class="pause-signal">Brauchen Sie eine Pause?</div>', subtext: 'Weiter mit [ . ].', duration: 0 },
-      { type: 'Phonetisch', category: 'K', duration: 60000 },
+      { type: 'Phonetisch', category: '<span style="font-size: 80px;">K</span>', duration: 60000 },
       { type: 'Stop', category: '<div class="stop-signal">STOP</div>', subtext: 'Atmen Sie durch. Weiter mit [ . ] zum letzten Durchgang.', duration: 0 },
       { type: 'Pause', category: '<div class="pause-signal">Brauchen Sie eine Pause?</div>', subtext: 'Weiter mit [ . ].', duration: 0 },
-      { type: 'Semantisch', category: 'Jobs', duration: 60000 },
+      { type: 'Semantisch', category: '<span style="font-size: 80px;">Berufe</span>', duration: 60000 },
       { type: 'Stop', category: '<div class="stop-signal">STOP</div>', subtext: 'Atmen Sie durch. Weiter mit [ . ] zum letzten Durchgang.', duration: 0 },
       //      { type: 'Phonetisch', category: 'Buchstabe: P', duration: 60000 },
       //      { type: 'Semantisch', category: 'Lebensmittel', duration: 60000 },
@@ -221,22 +220,28 @@
 
             Es wird ihnen auf dem Bildschirm eine Frage angezeigt. Bitte reden sie 5 Minuten über diese Frage.<br><br>
 
-            Tipp: Es gibt kein „Richtig“ oder „Falsch“. Erzählen Sie einfach alles, was Ihnen zu diesem Thema einfällt bis die Zeit abgelaufen ist.<br><br>
+            Hinweis: Es gibt kein „Richtig“ oder „Falsch“. Erzählen Sie einfach alles, was Ihnen zu diesem Thema einfällt bis die Zeit abgelaufen ist.<br><br>
 
             Umfang: Es werden Ihnen zwei Fragen angezeigt.
           </div>`,
         subtext: 'Drücken Sie [ . ] zum Starten.', duration: 0 },
+        
       { type: 'Freies Sprechen', category: 'Kindheitserinnerung', duration: 300000 },
-
       { type: 'Stop', category: '<div class="stop-signal">STOP</div>', subtext: 'Atmen Sie durch. Weiter mit [ . ].', duration: 0 },
       { type: 'Pause', category: '<div class="pause-signal">Brauchen Sie eine Pause?</div>', subtext: 'Sehr gut. Weiter mit [ . ] zum freien Sprechen.', duration: 0 },
+        
+      { type: 'Freies Sprechen', category: 'Kindheitserinnerung', duration: 300000 },
+      { type: 'Stop', category: '<div class="stop-signal">STOP</div>', subtext: 'Atmen Sie durch. Weiter mit [ . ].', duration: 0 },
+      { type: 'Pause', category: '<div class="pause-signal">Brauchen Sie eine Pause?</div>', subtext: 'Sehr gut. Weiter mit [ . ] zum freien Sprechen.', duration: 0 },
+      
       { type: 'Anweisung', 
         category: `
           <div class="reading-box">
-            Letzte Aufgabe:
+            Letzte Aufgabe:<br><br>
 
-            Bitte geben Sie die Geschichte "Nordwind und Sonne", die Sie am Anfang vorgelesen haben, so detailliert wie möglich mit Ihren eigenen Worten wieder.
-
+            Bitte geben Sie die Geschichte "Nordwind und Sonne", die Sie am Anfang vorgelesen haben, so detailliert wie möglich mit Ihren eigenen Worten wieder.<br><br>
+            
+            Dafür gibt es keine Mindest oder Maximalzeit.
           </div>`,
           subtext: 'Drücken Sie [ . ] zum Starten.', duration: 0 },
       { type: 'Nacherzählung', category: 'Nordwind und Sonne', duration: 0 },
@@ -283,17 +288,17 @@
 
               if (audio_consent === true) {
                 displayCategory = `
-                  <div class="text-container" style="border: 2px solid #4caf50; padding: 20px; border-radius: 10px;">
-                    <h2 style="color: #4caf50;">🎤 Mikrofon bereit (Einwilligung erteilt)</h2>
-                    <p>Sie haben zugestimmt, dass Ihre <strong>Audioaufnahmen anonymisiert veröffentlicht</strong> werden dürfen.</p>
-                    <p>Bitte stellen Sie sicher, dass Ihr Mikrofon aktiv ist, damit die spätere Transkription präzise erfolgen kann.</p>
+                  <div class="text-container" style="border: 2px solid #666; padding: 10px; border-radius: 10px;">
+                    <h3 style="color: #666;">Mikrofon test</h3>
+                    <p>Bitte lesen sie folgendes vor: <i>Das ist ein Text. Oben ist eine Zeitleiste die anzeigt, wie lange dieser Bildschirm noch offen bleibt. Ich kann das Experiment mit den Tasten Punkt [ . ] und Komma [ , ] steuern. Punkt steht für "weiter" und Komma für "zurück".</i></p>
+                    <p>Drücken Sie nun <i>[ . ]</i> um diesen Bildschirm vorzeitig zu beenden</p>
                   </div>`;
               } else {
                 displayCategory = `
                   <div class="text-container" style="border: 2px solid #666; padding: 20px; border-radius: 10px;">
-                    <h2 style="color: #666;">🎤 Mikrofon bereit (Nur interne Nutzung)</h2>
-                    <p>Sie haben der Veröffentlichung der Audioaufnahmen <strong>nicht zugestimmt</strong>.</p>
-                    <p>Ihre Stimme wird ausschließlich für die interne Auswertung genutzt und nicht an Dritte weitergegeben.</p>
+                    <h3 style="color: #666;">Mikrofon test</h3>
+                    <p>Bitte lesen sie folgendes vor: <i>Das ist ein Text. Ich kann das Experiment mit den Tasten Punkt [ . ] und Komma  [ , ] steuern. Punkt steht für weiter und Komma für zurück. Oben ist eine Zeitleiste die anzeigt, wie lange dieser Bildschirm noch offen bleibt. </i></p>
+                    <p>Drücken Sie nun <i>[ . ]</i> um diesen Bildschirm vorzeitig zu beenden</p>
                   </div>`;
               }
             }
