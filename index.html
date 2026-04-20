@@ -321,14 +321,14 @@
             </div>
             <div class="stimulus-word">${displayCategory}</div>
             ${item.subtext ? `<div class="sub-instruction">${item.subtext}</div>` : ''}
-            ${item.type !== 'login' && item.type !== 'consent' && item.type !== 'DDK'  && item.type !== 'Fluency' && current_index < trials_data.length - 1 ? 
+            ${item.type !== 'login' && item.type !== 'consent' && item.type !== 'DDK' && item.type !== 'Fluency' && item.type !== 'Freies Sprechen' && current_index < trials_data.length - 1 ? 
               `<div class="nav-hint">Weiter mit [ . ] ${current_index > 0 ? '| Zurück mit [ , ]' : ''}</div>` : ''}
           `;
         },
         choices: function() {
           const type = trials_data[current_index].type;
           if (DEBUG_MODE) return [',', '.']; // When DEBUG_MODE on
-          if (type === 'login' || type === 'consent' || type === 'DDK' || type === 'Fluency') return "NO_KEYS"; // When DEBUG_MODE off
+          if (type === 'login' || type === 'consent' || type === 'DDK' || type === 'Fluency' || type === 'Freies Sprechen') return "NO_KEYS"; // When DEBUG_MODE off
           return [',', '.'];
         },
         trial_duration: function() {
