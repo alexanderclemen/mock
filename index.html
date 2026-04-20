@@ -47,6 +47,8 @@
   <script>
     const jsPsych = initJsPsych();
 
+    const DEBUG_MODE = true; // Auf 'false' setzen für die echte Studie
+
     const STUDY_PASSWORD = "1234";
 
     let ddk_iteration = 1;
@@ -134,13 +136,13 @@
       },
       
       // DDK BLOCK 1
-      { type: 'DDK-Aktiv', category: '<span style="font-size: 80px;">pa - ta - ka</span>', duration: 10000, iteration: 1 },
+      { type: 'DDK', category: '<span style="font-size: 80px;">pa - ta - ka</span>', duration: 10000, iteration: 1 },
       { type: 'Stop', category: '<div class="stop-signal">STOP</div>', subtext: 'Atmen Sie durch. Weiter mit [ . ] zu Durchgang 2.', duration: 0 },
       // DDK BLOCK 2
-      { type: 'DDK-Aktiv', category: '<span style="font-size: 80px;">pa - ta - ka</span>', duration: 10000, iteration: 2 },
+      { type: 'DDK', category: '<span style="font-size: 80px;">pa - ta - ka</span>', duration: 10000, iteration: 2 },
       { type: 'Stop', category: '<div class="stop-signal">STOP</div>', subtext: 'Atmen Sie durch. Weiter mit [ . ] zum letzten Durchgang.', duration: 0 },
       // DDK BLOCK 3
-      { type: 'DDK-Aktiv', category: '<span style="font-size: 80px;">pa - ta - ka</span>', duration: 10000, iteration: 3 },
+      { type: 'DDK', category: '<span style="font-size: 80px;">pa - ta - ka</span>', duration: 10000, iteration: 3 },
       { type: 'Stop', category: '<div class="stop-signal">STOP</div>', subtext: 'Sehr gut. Weiter mit [ . ].', duration: 0 },
       { type: 'Pause', category: '<div class="pause-signal">Brauchen Sie eine Pause?</div>', subtext: 'Weiter mit [ . ] zum nächsten Teil.', duration: 0 },
 
@@ -197,19 +199,19 @@
         subtext: '1 Minute pro Aufgabe. Drücken Sie [ . ] zum Starten.', 
         duration: 0 
       },
-      { type: 'Phonetisch', category: '<span style="font-size: 80px;">S</span>', duration: 60000 },
+      { type: 'Fluency', category: '<span style="font-size: 80px;">S</span>', duration: 60000 },
       { type: 'Stop', category: '<div class="stop-signal">STOP</div>', subtext: 'Atmen Sie durch. Weiter mit [ . ] zum zweiten Durchgang.', duration: 0 },
       { type: 'Pause', category: '<div class="pause-signal">Brauchen Sie eine Pause?</div>', subtext: 'Weiter mit [ . ].', duration: 0 },
-      { type: 'Semantisch', category: '<span style="font-size: 80px;">Tiere</span>', duration: 60000 },
+      { type: 'Fluency', category: '<span style="font-size: 80px;">Tiere</span>', duration: 60000 },
       { type: 'Stop', category: '<div class="stop-signal">STOP</div>', subtext: 'Atmen Sie durch. Weiter mit [ . ] zum dritten Durchgang.', duration: 0 },
       { type: 'Pause', category: '<div class="pause-signal">Brauchen Sie eine Pause?</div>', subtext: 'Weiter mit [ . ].', duration: 0 },
-      { type: 'Phonetisch', category: '<span style="font-size: 80px;">K</span>', duration: 60000 },
+      { type: 'Fluency', category: '<span style="font-size: 80px;">K</span>', duration: 60000 },
       { type: 'Stop', category: '<div class="stop-signal">STOP</div>', subtext: 'Atmen Sie durch. Weiter mit [ . ] zum letzten Durchgang.', duration: 0 },
       { type: 'Pause', category: '<div class="pause-signal">Brauchen Sie eine Pause?</div>', subtext: 'Weiter mit [ . ].', duration: 0 },
-      { type: 'Semantisch', category: '<span style="font-size: 80px;">Berufe</span>', duration: 60000 },
+      { type: 'Fluency', category: '<span style="font-size: 80px;">Berufe</span>', duration: 60000 },
       { type: 'Stop', category: '<div class="stop-signal">STOP</div>', subtext: 'Atmen Sie durch. Weiter mit [ . ].', duration: 0 },
-      //      { type: 'Phonetisch', category: 'Buchstabe: P', duration: 60000 },
-      //      { type: 'Semantisch', category: 'Lebensmittel', duration: 60000 },
+      //      { type: 'Fluency', category: 'Buchstabe: P', duration: 60000 },
+      //      { type: 'Fluency', category: 'Lebensmittel', duration: 60000 },
 
       { type: 'Anweisung', category: 'Phase 3: Freies Sprechen', subtext: '5 Minuten pro Frage. Drücken Sie [ . ] zum Starten.', duration: 0 },
       { type: 'Anweisung', 
@@ -309,7 +311,9 @@
           
           let header = item.type.toUpperCase();
           if(item.iteration) header += ` (DURCHGANG ${item.iteration} VON 3)`;
-
+          if (DEBUG_MODE) {
+            header = `<span style="color: #d9534f;">🛠 DEBUG AKTIV</span> | ` + header;
+          }
           return `
             <div class="experiment-header">
               <div style="text-transform: uppercase; color: #666; letter-spacing: 1px;">${header}</div>
@@ -317,13 +321,14 @@
             </div>
             <div class="stimulus-word">${displayCategory}</div>
             ${item.subtext ? `<div class="sub-instruction">${item.subtext}</div>` : ''}
-            ${item.type !== 'login' && item.type !== 'consent' && item.type !== 'DDK-Aktiv' && current_index < trials_data.length - 1 ? 
+            ${item.type !== 'login' && item.type !== 'consent' && item.type !== 'DDK'  && item.type !== 'Fluency' && current_index < trials_data.length - 1 ? 
               `<div class="nav-hint">Weiter mit [ . ] ${current_index > 0 ? '| Zurück mit [ , ]' : ''}</div>` : ''}
           `;
         },
         choices: function() {
           const type = trials_data[current_index].type;
-          if (type === 'login' || type === 'consent' || type === 'DDK-Aktiv') return "NO_KEYS";
+          if (DEBUG_MODE) return [',', '.']; // When DEBUG_MODE on
+          if (type === 'login' || type === 'consent' || type === 'DDK' || type === 'Fluency') return "NO_KEYS"; // When DEBUG_MODE off
           return [',', '.'];
         },
         trial_duration: function() {
@@ -331,11 +336,19 @@
         },
         on_finish: function(data) {
           const type = trials_data[current_index].type;
+          
+          // Im Debug-Modus erlauben wir auch bei Login/Consent das Springen
+          if (DEBUG_MODE) {
+            if (data.response === '.') { current_index++; return; }
+            if (data.response === ',') { current_index = Math.max(0, current_index - 1); return; }
+          }
+
+          // Normaler Ablauf
           if (type === 'login' || type === 'consent') return;
 
           if (data.response === '.') current_index++;
           else if (data.response === ',') current_index = Math.max(0, current_index - 1);
-          else if (data.response === null) current_index++; // Automatisch weiter nach Zeitablauf (DDK/Fluency)
+          else if (data.response === null) current_index++; 
         }
       }],
       loop_function: function() {
