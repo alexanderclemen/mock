@@ -118,9 +118,17 @@
         category: `
           <div class="reading-box">
             <strong>Erklärung 1: Artikulation</strong><br><br>
-            Hier steht ein langer Erklärungstext.
-          </div>`,
-        subtext: '1 Minute pro Aufgabe. Drücken Sie [ . ] zum Starten.', 
+            Bitte wiederholen Sie "pa-ta-ka" so schnell und deutlich wie möglich bis auf dem Bildschirm ein großes STOP zu sehen ist.<br><br>
+
+              Ablauf: Wir führen insgesamt drei Durchläufe durch.<br>
+
+              Dauer: Jeder Durchlauf dauert 10 Sekunden.<br>
+
+              Pause: Zwischen jedem Durchläufen haben Sie Zeit zum durchzuatmen.<br>
+
+              Holen sie vor jedem Durchlauf einmal tief Luft.
+            </div>`,
+        subtext: 'Drücken Sie [ . ] zum Starten.', 
         duration: 0 
       },
       
@@ -133,15 +141,21 @@
       // DDK BLOCK 3
       { type: 'DDK-Aktiv', category: 'pa - ta - ka', duration: 10000, iteration: 3 },
       { type: 'Stop', category: '<div class="stop-signal">STOP</div>', subtext: 'Sehr gut. Weiter mit [ . ].', duration: 0 },
-      { type: 'Pause', category: '<div class="pause-signal">Brauchen Sie eine Pause?</div>', subtext: 'Weiter mit [ . ] zu den Lesetexten.', duration: 0 },
+      { type: 'Pause', category: '<div class="pause-signal">Brauchen Sie eine Pause?</div>', subtext: 'Weiter mit [ . ] zum nächsten Teil.', duration: 0 },
 
       { type: 'Anweisung', 
         category: `
           <div class="reading-box">
             <strong>Erklärung 1: Lesen</strong><br><br>
-            Hier steht ein langer Erklärungstext.
+            Nun folgen zwei kurze Texte. Bitte lesen Sie diese nacheinander in einem angenehmen Tempo laut vor. <br><br>
+
+            Es geht nicht um Schnelligkeit, sondern um einen natürlichen Lesefluss.<br>
+
+            Falls sie einen Fehler machen wiederholen Sie bitte den ganzen Satz noch einmal.<br>
+
+            Wenn sie mit dem ersten Text fertig sind drücken Sie auf [ . ], dann gibt es eine Pause.
           </div>`,
-        subtext: '1 Minute pro Aufgabe. Drücken Sie [ . ] zum Starten.', 
+        subtext: 'Drücken Sie [ . ] zum Starten.', 
         duration: 0 
       },
       { type: 'Lesetext', 
@@ -150,10 +164,10 @@
             <strong>Der Tag am Bodensee</strong><br><br>
             Rita packt ihr Paket. Es ist spät, doch die Sonne scheint auf das Beet. Sie trägt einen Hut und geht zum Boot, das am Kai liegt. Ihr Hund Bodo bellt laut, als er ein Gebäck im Gras entdeckt. Sie sieht ein Boot im tiefen Wasser. Der Wind weht über das Kap. Sie isst einen Apfel und ein Stück Brot, während sie auf den Tag blickt. Plötzlich macht es patsch! Ein Ball ist in den Dreck gefallen. Bodo hat Glück und findet eine Puppe im Gebüsch. Rita lacht und ruft: „Guck mal!“ Alles ist gut. Der Staub auf dem Weg legt sich, und die Nacht kommt mit kühler Luft. Sie geht zurück in ihr Depot und träumt von einem Ritt auf dem Bock.
           </div>`, 
-        subtext: 'Bitte lesen Sie den Text ruhig und deutlich vor.', 
+        <!--subtext: 'Bitte lesen Sie den Text ruhig und deutlich vor.',-->
         duration: 0 
       },
-      { type: 'Pause', category: '<div class="pause-signal">Brauchen Sie eine Pause?</div>', subtext: 'Sehr gut. Weiter mit [ . ] zum zweiten Text.', duration: 0 },
+      { type: 'Pause', category: '<div class="pause-signal">Brauchen Sie eine Pause?</div>', subtext: 'Weiter mit [ . ] zum zweiten Text.', duration: 0 },
 
       { type: 'Lesetext',
         category: `
@@ -161,7 +175,7 @@
             <strong>Nordwind und Sonne</strong><br><br>
             Einst stritten sich Nordwind und Sonne, wer von ihnen beiden wohl der Stärkere wäre, als ein Wanderer, der in einen warmen Mantel gehüllt war, des Weges daherkam. Sie wurden einig, dass derjenige für den Stärkeren gelten sollte, der den Wanderer zwingen würde, seinen Mantel abzunehmen. Der Nordwind blies mit aller Macht, aber je mehr er blies, desto fester hüllte sich der Wanderer in seinen Mantel ein. Endlich gab der Nordwind den Kampf auf. Nun erwärmte die Sonne die Luft mit ihren freundlichen Strahlen, und schon nach wenigen Augenblicken zog der Wanderer seinen Mantel aus. Da musste der Nordwind zugeben, dass die Sonne von ihnen beiden der Stärkere war.
           </div>`, 
-        subtext: 'Bitte lesen Sie den Text laut und deutlich vor.', 
+        <!--subtext: 'Bitte lesen Sie den Text laut und deutlich vor.',-->
         duration: 0
       },
       { type: 'Pause', category: '<div class="pause-signal">Brauchen Sie eine Pause?</div>', subtext: 'Sehr gut. Weiter mit [ . ] zur Wortflüssigkeit.', duration: 0 },
@@ -170,43 +184,62 @@
       { type: 'Anweisung', 
         category: `
           <div class="reading-box">
-            <strong>Erklärung 2: Wortflüssigkeit</strong><br><br>
-            Hier steht ein langer Erklärungstext.
+            Teil 1 von 3 ist geschafft!<br><br>
+
+            Nun wird Ihnen entweder ein Buchstabe (z. B. "P") oder eine Kategorie (z.B. "Farben") angezeigt. Bitte nennen Sie so viele passende Wörter wie möglich, die mit diesem Buchstaben beginnen oder zur Kategorie passen.<br><br>
+            Hinweis: Versuchen Sie, Wortwiederholungen zu vermeiden.<br><br>
+
+            Dauer: Sie haben pro Durchgang 60 Sekunden Zeit. Dann kommt das STOP Signal.<br>
+
+            Umfang: Insgesamt führen wir vier Durchläufe durch.<br>
+
+            Pausen: Zwischen den Runden können Sie kurz verschnaufen.<br>
+
           </div>`,
         subtext: '1 Minute pro Aufgabe. Drücken Sie [ . ] zum Starten.', 
         duration: 0 
       },
-      { type: 'Phonetisch', category: 'Nennen Sie Worte, die mit "S" anfangen', duration: 60000 },
+      { type: 'Phonetisch', category: 'S', duration: 60000 },
       { type: 'Stop', category: '<div class="stop-signal">STOP</div>', subtext: 'Atmen Sie durch. Weiter mit [ . ] zum nächsten Durchgang.', duration: 0 },
+      { type: 'Pause', category: '<div class="pause-signal">Brauchen Sie eine Pause?</div>', subtext: 'Weiter mit [ . ].', duration: 0 },
       { type: 'Semantisch', category: 'Tiere', duration: 60000 },
       { type: 'Stop', category: '<div class="stop-signal">STOP</div>', subtext: 'Atmen Sie durch. Weiter mit [ . ] zum nächsten Durchgang.', duration: 0 },
-      { type: 'Phonetisch', category: 'Nennen Sie Worte, die mit "K" anfangen', duration: 60000 },
+      { type: 'Pause', category: '<div class="pause-signal">Brauchen Sie eine Pause?</div>', subtext: 'Weiter mit [ . ].', duration: 0 },
+      { type: 'Phonetisch', category: 'K', duration: 60000 },
       { type: 'Stop', category: '<div class="stop-signal">STOP</div>', subtext: 'Atmen Sie durch. Weiter mit [ . ] zum letzten Durchgang.', duration: 0 },
-      { type: 'Semantisch', category: 'Nennen Sie Lebensmittel', duration: 60000 },
+      { type: 'Pause', category: '<div class="pause-signal">Brauchen Sie eine Pause?</div>', subtext: 'Weiter mit [ . ].', duration: 0 },
+      { type: 'Semantisch', category: 'Jobs', duration: 60000 },
       { type: 'Stop', category: '<div class="stop-signal">STOP</div>', subtext: 'Atmen Sie durch. Weiter mit [ . ] zum letzten Durchgang.', duration: 0 },
-//      { type: 'Phonetisch', category: 'Buchstabe: P', duration: 60000 },
-      { type: 'Pause', category: '<div class="pause-signal">Brauchen Sie eine Pause?</div>', subtext: 'Sehr gut. Weiter mit [ . ] zum freien Sprechen.', duration: 0 },
+      //      { type: 'Phonetisch', category: 'Buchstabe: P', duration: 60000 },
+      //      { type: 'Semantisch', category: 'Lebensmittel', duration: 60000 },
 
       { type: 'Anweisung', category: 'Phase 3: Freies Sprechen', subtext: '5 Minuten pro Frage. Drücken Sie [ . ] zum Starten.', duration: 0 },
       { type: 'Anweisung', 
         category: `
           <div class="reading-box">
-            <strong>Erklärung 3: Freies Sprechen</strong><br><br>
-            Hier steht ein langer Erklärungstext.
+            Sie haben den letzten Teil erreicht.<br><br>
+
+            Es wird ihnen auf dem Bildschirm eine Frage angezeigt. Bitte reden sie 5 Minuten über diese Frage.<br><br>
+
+            Tipp: Es gibt kein „Richtig“ oder „Falsch“. Erzählen Sie einfach alles, was Ihnen zu diesem Thema einfällt bis die Zeit abgelaufen ist.<br><br>
+
+            Umfang: Es werden Ihnen zwei Fragen angezeigt.
           </div>`,
-        subtext: '5 Minuten pro Frage. Drücken Sie [ . ] zum Starten.', duration: 0 },
-      { type: 'Diskussion', category: 'Kindheitserinnerung', duration: 300000 },
+        subtext: 'Drücken Sie [ . ] zum Starten.', duration: 0 },
+      { type: 'Freies Sprechen', category: 'Kindheitserinnerung', duration: 300000 },
 
       { type: 'Stop', category: '<div class="stop-signal">STOP</div>', subtext: 'Atmen Sie durch. Weiter mit [ . ].', duration: 0 },
       { type: 'Pause', category: '<div class="pause-signal">Brauchen Sie eine Pause?</div>', subtext: 'Sehr gut. Weiter mit [ . ] zum freien Sprechen.', duration: 0 },
       { type: 'Anweisung', 
         category: `
           <div class="reading-box">
-            <strong>Erklärung 3: Freies Sprechen</strong><br><br>
-            Hier steht ein langer Erklärungstext.
+            Letzte Aufgabe:
+
+            Bitte geben Sie die Geschichte "Nordwind und Sonne", die Sie am Anfang vorgelesen haben, so detailliert wie möglich mit Ihren eigenen Worten wieder.
+
           </div>`,
-          subtext: '5 Minuten pro Frage. Drücken Sie [ . ] zum Starten.', duration: 0 },
-      { type: 'Nacherzählung', category: 'Nordwind und Sonne', subtext: 'Bitte geben Sie die Geschichte, die Sie am Anfang gelesen haben, so detailliert wie möglich mit Ihren eigenen Worten wieder.', duration: 0 },
+          subtext: 'Drücken Sie [ . ] zum Starten.', duration: 0 },
+      { type: 'Nacherzählung', category: 'Nordwind und Sonne', duration: 0 },
       { type: 'Ende', category: '<h2>Vielen Dank!</h2>', duration: 0 }
     ];
 
