@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
   <head>
-    <title>Investigating Speechmarkers in People with Epilepsy</title>
+    <meta charset="UTF-8"> <title>Investigating Speechmarkers in People with Epilepsy</title>
     <script src="https://unpkg.com/jspsych@7.3.4"></script>
     <script src="https://unpkg.com/@jspsych/plugin-html-keyboard-response@1.1.3"></script>
     <link href="https://unpkg.com/jspsych@7.3.4/css/jspsych.css" rel="stylesheet" type="text/css" />
@@ -20,7 +20,7 @@
       @keyframes fillProgress { from { width: 0%; } to { width: 100%; } }
       .jspsych-content-wrapper { padding-top: 100px; }
       .reading-box {
-        max-width: 800px; text-align: left; font-family: 'Times New Roman', serif;
+        max-width: 1200px; text-align: left; font-family: 'Times New Roman', serif;
         font-size: 22px; line-height: 1.5; background: #fff;
         padding: 30px; border: 1px solid #ccc; box-shadow: 2px 2px 10px rgba(0,0,0,0.05);
         margin: 0 auto;
@@ -47,7 +47,7 @@
   <script>
     const jsPsych = initJsPsych();
 
-    const DEBUG_MODE = true; // Auf 'false' setzen für die echte Studie
+    const DEBUG_MODE = false; // Auf 'false' setzen für die echte Studie
 
     const STUDY_PASSWORD = "1234";
 
@@ -71,20 +71,23 @@
           <div class="text-container">
             <h2>Einverständniserklärung</h2>
             <p style="margin-bottom: 20px;">
-              Bitte lesen Sie die vollständige 
+              Bitte lesen Sie die 
                 <a href="consent_form.pdf" target="_blank" style="color: #0056b3; text-decoration: underline;">
-            Teilnehmerinformation (PDF)
-          </a> 
+            Teilnehmerinformation
+                </a> und die <a href="Datenschutz_combo_Verhaltensexperimente.pdf" target="_blank" style="color: #0056b3; text-decoration: underline;">
+            Datenschutzbestimmungen
+                </a>
           sorgfältig durch, bevor Sie fortfahren.
         </p>
             <div class="consent-box">
               <div class="consent-item">
                 <input type="checkbox" id="consent_transcript" onchange="checkConsent()">
-                <label for="consent_transcript"><strong>(Pflicht)</strong> Ich stimme der Veröffentlichung anonymisierter Transkripte, demographisher Daten, und unter Wissenschaflern medizinischer Daten zu.</label>
+                <label for="consent_transcript"><strong>(Pflicht)</strong> Ich habe die Teilnehmerinformation und Datenschutzbestimmungen gelesen und stimme diesen zu.
+                  Zudem stimme ich der Veröffentlichung anonymisierter Transkripte, demographischer Daten, und unter Wissenschaflern medizinischer Daten zu.</label>
               </div>
               <div class="consent-item">
                 <input type="checkbox" id="consent_audio">
-                <label for="consent_audio"><strong>(Optional)</strong> Ich stimme darüberhinaus der Veröffentlichung anonymisierter Audioaufnahmen zu.</label>
+                <label for="consent_audio"><strong>(Optional)</strong> Ich stimme der Veröffentlichung anonymisierter Audioaufnahmen zu.</label>
               </div>
             </div>
             <button id="start_btn" disabled onclick="advance()" style="margin-top:20px; padding: 10px 20px;">Akzeptieren und Weiter</button>
@@ -95,7 +98,7 @@
       { type: 'Mikrofontest', 
         category: '', // Wird dynamisch befüllt
         <!-- subtext: 'Sprechen Sie kurz zur Probe und drücken Sie dann [ . ]', -->
-        duration: 50000 
+        duration: 60000 
       },
 
       { type: 'Fragebogen',
@@ -104,7 +107,7 @@
             <h2>Fragebogen</h2>
             <p>Bevor wir mit den Aufgaben beginnen müssen Sie noch einen kurzen Fragebogen auszufüllen.</p>
             
-            <a href="https://HIERKOMMTNOCHEINLINKREIN.de/limesurvey/index.php/" 
+            <a href="https://thesis.alexander-clemen.de/limesurvey/index.php/876466?lang=de"
                target="_blank" 
                style="display: inline-block; padding: 15px 25px; background-color: #0056b3; color: white; text-decoration: none; border-radius: 5px; margin: 20px 0; font-weight: normal;">
                Fragebogen öffnen
@@ -117,7 +120,7 @@
         duration: 0
       },
 
-      { type: 'Anweisung', category: 'Phase 1: Artikulation & Lesen', subtext: 'Drücken Sie [ . ] für den ersten Lesetext.', duration: 0 },
+      { type: 'Anweisung', category: 'Phase 1: Artikulation & Lesen', subtext: 'Drücken Sie [ . ].', duration: 0 },
       { type: 'Anweisung', 
         category: `
           <div class="reading-box">
@@ -127,9 +130,9 @@
 
               Ablauf: Wir führen insgesamt drei Durchläufe durch.<br>
               Dauer: Jeder Durchlauf dauert 10 Sekunden.<br>
-              Pause: Zwischen jedem Durchläufen haben Sie Zeit zum durchzuatmen.<br><br>
+              Pause: Zwischen jedem Durchläufen haben Sie Zeit zum Durchatmen.<br><br>
 
-              Holen sie vor jedem Durchlauf einmal tief Luft.
+              Holen Sie vor jedem Durchlauf einmal tief Luft.
             </div>`,
         subtext: 'Drücken Sie [ . ] zum Starten.', 
         duration: 0 
@@ -154,8 +157,8 @@
             Nun folgen zwei kurze Texte. Bitte lesen Sie diese in einem angenehmen Tempo laut vor. <br><br>
 
             Es geht nicht um Schnelligkeit, sondern um einen natürlichen Lesefluss.<br>
-            Falls sie einen Fehler machen wiederholen Sie bitte den ganzen Satz noch einmal.<br>
-            Wenn sie mit dem ersten Text fertig sind drücken Sie auf [ . ], dann gibt es eine Pause.
+            Falls Sie einen Fehler machen wiederholen Sie bitte den ganzen Satz noch einmal.<br>
+            Wenn Sie mit dem ersten Text fertig sind drücken Sie auf [ . ], dann gibt es eine Pause.
           </div>`,
         subtext: 'Drücken Sie [ . ] zum Starten.', 
         duration: 0 
@@ -163,9 +166,13 @@
       { type: 'Lesetext', 
         category: `
           <div class="reading-box">
-            <strong>Der Tag am Bodensee</strong><br><br>
-            Rita packt ihr Paket. Es ist spät, doch die Sonne scheint auf das Beet. Sie trägt einen Hut und geht zum Boot, das am Kai liegt. Ihr Hund Bodo bellt laut, als er ein Gebäck im Gras entdeckt. Sie sieht ein Boot im tiefen Wasser. Der Wind weht über das Kap. Sie isst einen Apfel und ein Stück Brot, während sie auf den Tag blickt. Plötzlich macht es patsch! Ein Ball ist in den Dreck gefallen. Bodo hat Glück und findet eine Puppe im Gebüsch. Rita lacht und ruft: „Guck mal!“ Alles ist gut. Der Staub auf dem Weg legt sich, und die Nacht kommt mit kühler Luft. Sie geht zurück in ihr Depot und träumt von einem Ritt auf dem Bock.
-          </div>`, 
+            <strong>Der Ausflug zum See</strong><br><br>
+            Mitte Juli 2011 zog es Jan, einen Staatsanwalt des Stadtstaates Bremen, aufs Land. Er nahm einen seiner vielen Wanderhüte und entfloh der Hitze. An einem abgelegenen See fand er eine alte Hütte, die er für das Wochenende mietete. Als er seinen Hut zu den andern Hüten an die Wohnzimmerwand hängte, bemerkte er, dass im Garten ein prächtiges Beet war. Dahinter verlief ein schöner Steinpfad hinunter zum Seeufer.<br>
+            Unten angekommen, erblickte er ein für diese Gegend untypisches Tier: eine Robbe. Sie muss sich wohl verirrt haben. Was ein mutiges Tier. Jans Blick schweifte von der Robbe über das glitzernde Wasser zum Steg, an dem ein kleines Bötchen festgebunden war, und landete schließlich am gegenüberliegenden Hang, an dem Böcke grasten. Er spürte, wie sein Mut wuchs, das kalte Wasser endlich selbst zu testen. Er legte seine Robe ab, und sprang hinein. Dies schreckte die Böcke auf und sie rannten davon.<br>
+            Nach der Erfrischung kehrte er in die Mitte des Gartens zurück. Die Miete für diesen schönen Ort war jeden Cent wert, dachte er. Doch die Ruhe hielt nicht lange: Seine Mutter rief an. Für den Komfort, legte er in seinem Bett und sagte: „Ich sitze gerade in einer urigen Hütte.“ Er erzählte ihr von der Robbe, den Böcken und dass er am Abend vielleicht noch das Bötchen nutzen wolle.
+            „Pass auf dich auf“, sagte seine Mutter besorgt. Jan beruhigte sie, „Mutter, statt einer großen Runde mache ich eine kleine Runde.“ In diesem Bett fühlte sich sehr weit weg vom Stadtstaat. Er griff einen der Hüte, ging zum Beet und döste ein wenig in der Sonne. Als er aufwachte, stand sie schon zu tief für einen Ausflug mit dem Bötchen. Er ging zurück ins Haus, schlüpfte in eine leichtere Robe und richtete sich das Bett für die Nacht her.<br>
+            Am nächsten Morgen war der Nebel bis in die Mitte des Tals gezogen. Jan zahlte die Miete, warf einen letzten Blick auf das gepflegte Beet und die kleine Hütte. Als er losfuhr, sah er im Rückspiegel die Robbe abtauchen, das kleine Bötchen auf dem See. Er fühlte neuen Mut für die kommende Arbeitswoche.
+        </div>`, 
         duration: 0 
       },
       { type: 'Pause', category: '<div class="pause-signal">Brauchen Sie eine Pause?</div>', subtext: 'Weiter mit [ . ] zum zweiten Text.', duration: 0 },
@@ -193,7 +200,7 @@
             Dauer: Sie haben pro Durchgang 60 Sekunden Zeit. Dann kommt das STOP Signal.<br>
             Umfang: Insgesamt gibt es vier Durchläufe.<br>
             Pausen: Zwischen den Durchläufen gibt es Pausen.<br><br>
-            Pausen: Mit [ . ] starten sie die Aufgabe.<br>
+            Pausen: Mit [ . ] starten Sie die Aufgabe.<br>
 
           </div>`,
         subtext: '1 Minute pro Aufgabe. Drücken Sie [ . ] zum Starten.', 
@@ -219,7 +226,7 @@
           <div class="reading-box">
             Sie haben den letzten Teil erreicht. Ab jetzt dauert es noch ca. 15 Minuten.<br><br>
 
-            Es wird Ihnen auf dem Bildschirm eine Frage angezeigt. Bitte reden sie 5 Minuten über diese Frage.<br><br>
+            Es wird Ihnen auf dem Bildschirm eine Frage angezeigt. Bitte reden Sie 5 Minuten über diese Frage.<br><br>
 
             Hinweis: Es gibt kein „Richtig“ oder „Falsch“. Erzählen Sie einfach alles, was Ihnen zu diesem Thema einfällt bis die Zeit abgelaufen ist.
           </div>`,
@@ -242,7 +249,7 @@
             
             Dafür gibt es keine Mindest oder Maximalzeit.<br><br>
 
-            Bitte drücken sie ein letztes mal [ . ]
+            Bitte drücken Sie ein letztes mal [ . ]
           </div>`,
           subtext: 'Drücken Sie [ . ] zum Starten.', duration: 0 },
       { type: 'Nacherzählung', category: 'Nordwind und Sonne', duration: 0 },
@@ -290,16 +297,16 @@
               if (audio_consent === true) {
                 displayCategory = `
                   <div class="text-container" style="border: 2px solid #666; padding: 10px; border-radius: 10px;">
-                    <h3 style="color: #666;">Mikrofon test</h3>
-                    <p>Bitte lesen sie folgendes vor: <i>Das ist ein Text. Oben ist eine Zeitleiste die anzeigt, wie lange dieser Bildschirm noch offen bleibt. Ich kann das Experiment mit den Tasten Punkt [ . ] und Komma [ , ] steuern. Punkt steht für "weiter" und Komma für "zurück".</i></p>
-                    <p>Drücken Sie nun <i>[ . ]</i> um diesen Bildschirm vorzeitig zu beenden</p>
+                    <h3 style="color: #666;">Mikrofontest</h3>
+                    <p>Bitte lesen Sie folgendes laut vor: <i>"Das ist ein Text. Oben ist eine Zeitleiste, die anzeigt, wie lange dieser Bildschirm noch offen bleibt. Ich kann das Experiment mit den Tasten Punkt [ . ] und Komma [ , ] steuern. Punkt steht für "weiter" und Komma für "zurück"."</i></p>
+                    <p>Drücken Sie nun <i>[ . ]</i> um diesen Bildschirm zu beenden</p>
                   </div>`;
               } else {
                 displayCategory = `
                   <div class="text-container" style="border: 2px solid #666; padding: 20px; border-radius: 10px;">
-                    <h3 style="color: #666;">Mikrofon test</h3>
-                    <p>Bitte lesen sie folgendes vor: <i>Das ist ein Text. Ich kann das Experiment mit den Tasten Punkt [ . ] und Komma  [ , ] steuern. Punkt steht für weiter und Komma für zurück. Oben ist eine Zeitleiste die anzeigt, wie lange dieser Bildschirm noch offen bleibt. </i></p>
-                    <p>Drücken Sie nun <i>[ . ]</i> um diesen Bildschirm vorzeitig zu beenden</p>
+                    <h3 style="color: #666;">Mikrofontest</h3>
+                    <p>Bitte lesen Sie folgendes laut vor: <i>"Das ist ein Text. Ich kann das Experiment mit den Tasten Punkt [ . ] und Komma  [ , ] steuern. Punkt steht für weiter und Komma für zurück. Oben ist eine Zeitleiste die anzeigt, wie lange dieser Bildschirm noch offen bleibt."</i></p>
+                    <p>Drücken Sie nun <i>[ . ]</i> um diesen Bildschirm zu beenden</p>
                   </div>`;
               }
             }
